@@ -7,6 +7,7 @@ namespace App\Repositories\User;
 use App\Entities\User;
 use App\Repositories\Contracts\UserRepositoryInterface;
 use App\Repositories\EloquentBaseRepository;
+use Illuminate\Http\Request;
 
 class EloquentUserRepository extends EloquentBaseRepository implements UserRepositoryInterface
 {
@@ -48,13 +49,25 @@ class EloquentUserRepository extends EloquentBaseRepository implements UserRepos
     }
 
     /**
-     * @param string $column
-     * @param string $operator
-     * @param string $value
+     * @param array $wheres
      * @return User[]|\Illuminate\Database\Eloquent\Collection
      */
-    public function where(string $column, string $operator, string $value)
+    public function where($wheres = [])
     {
-        return $this->getModel()->where($column, $operator, $value)->get();
+        $wheres = $this->parseWheres($wheres);
+        return $this->getModel()->where($wheres)->get();
+    }
+
+    /**
+     * @param array $data
+     * @return array
+     */
+    private function parseWheres(array $data): array
+    {
+        $wheres = [];
+        foreach ($data as $column => $value) {
+            $wheres[] = [$column, '=', $value];
+        }
+        return $wheres;
     }
 }

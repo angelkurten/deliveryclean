@@ -10,5 +10,5 @@ interface ListUserInterface
 {
     public function __construct(UserRepositoryInterface $userRepository);
 
-    public function handle($filter = null, $value = null);
+    public function handle($wheres = []);
 }

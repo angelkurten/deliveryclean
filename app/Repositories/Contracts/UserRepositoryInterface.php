@@ -16,6 +16,6 @@ interface UserRepositoryInterface
 
     public function create(array $data);
 
-    public function where(string $column, string $operator, string $value);
+    public function where($wheres = []);
 
 }

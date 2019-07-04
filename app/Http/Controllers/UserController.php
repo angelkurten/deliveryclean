@@ -17,12 +17,7 @@ class UserController extends Controller
      */
     public function index(Request $request, ListUserInterface $listUser)
     {
-        if($request->has('filter') and $request->has('value')){
-            return response()->json(
-                $listUser->handle($request->filter, $request->value)
-            );
-        }
-        return response()->json($listUser->handle());
+        return response()->json($listUser->handle($request->all()));
     }
 
     /**
@@ -70,4 +65,6 @@ class UserController extends Controller
     {
         //
     }
+
+
 }

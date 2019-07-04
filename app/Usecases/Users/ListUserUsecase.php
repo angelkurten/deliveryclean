@@ -20,12 +20,12 @@ class ListUserUsecase implements ListUserInterface
         $this->userRepository = $userRepository;
     }
 
-    public function handle($filter = null, $value = null)
+    public function handle($wheres = [])
     {
-        if(is_null($filter) and is_null($value)){
+        if(empty($wheres)){
             return $this->userRepository->all();
         }
 
-        return $this->userRepository->where($filter, '=', $value);
+        return $this->userRepository->where($wheres);
     }
 }
